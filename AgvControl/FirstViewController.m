@@ -12,10 +12,29 @@
 #import "ConnectStatesCell.h"
 #import "SettingViewController.h"
 #import "LoginViewController.h"
+#import <TSTableView.h>
+#import <TSTableViewModel.h>
+#import "MapView.h"
+
 //#import "ServerSocket.h"
 //#import "UdpServerSocket.h"
 
-@interface FirstViewController ()
+#define LEFTPADING   15
+#define TOPPADING    45
+#define RIGHTPADING  15
+#define BOTTOMPADING 25
+#define MAPWIDTH     1600
+#define MAPHEIGHT    900
+#define TAPHEIGHT    49
+
+@interface FirstViewController ()  <UITableViewDelegate, UITableViewDataSource>
+{
+    NSInteger screenWidth;
+    UIView *mapContainer;
+    UIView *stationContainer;
+    UIView *detailContainer;
+    
+}
 
 //@property (nonatomic) UdpServerSocket *server;
 @property (nonatomic) HitControl *control;
@@ -49,111 +68,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [CommonsFunc colorOfSystemBackground];
+    self.view.backgroundColor = [UIColor whiteColor];//[CommonsFunc colorOfSystemBackground];
     isStart = NO;
-    NSInteger screenWidth = [UIScreen mainScreen].bounds.size.width;
+    screenWidth = [UIScreen mainScreen].bounds.size.width;
     
-    UIImageView *robot1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"robot_1.png"]];
-    [self.view addSubview:robot1];
-    [robot1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20);
-        make.left.equalTo(self.view).offset(10);
-        if (![CommonsFunc isDeviceIpad]) {
-            make.size.mas_equalTo(CGSizeMake(150, 220));
-        }
-    }];
+    [self addContainerView];
     
-    UIImageView *robot2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"robot_2.png"]];
-    [self.view addSubview:robot2];
-    [robot2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20);
-        make.right.equalTo(self.view).offset(5);
-    }];
     
-    UIImageView *robot3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"robot_3.png"]];
-    [self.view addSubview:robot3];
-    [robot3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view);
-        make.centerY.equalTo(self.view).offset(80);
-    }];
-    if (![CommonsFunc isDeviceIpad]) {
-        robot2.hidden = YES;
-        robot3.hidden = YES;
-    }
-    
-    UIImageView *robot4 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
-    [self.view addSubview:robot4];
-    [robot4 mas_makeConstraints:^(MASConstraintMaker *make) {
-        if ([CommonsFunc isDeviceIpad]) {
-            make.centerX.equalTo(self.view);
-            make.top.equalTo(self.view).offset(50);
-        }else {
-            make.centerX.equalTo(self.view).offset(screenWidth/8);
-            make.top.equalTo(self.view).offset(20);
-        }
-        
-        make.size.mas_equalTo(CGSizeMake(100, 100));
-    }];
-    UILabel *hitLable = [UILabel new];
-    hitLable.text = @"芜湖哈特机器人研究院";
-    [self.view addSubview:hitLable];
-    [hitLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(robot4.mas_bottom).offset(5);
-        make.centerX.equalTo(robot4);
-    }];
-    
-    UILabel *ipLabel= [UILabel new];
-    ipLabel.text = @"本机ip地址";
-    [self.view addSubview:ipLabel];
-    [ipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view).offset(-100);
-        if ([CommonsFunc isDeviceIpad]) {
-            make.left.equalTo(self.view).offset(150);
-        }else
-            make.left.equalTo (self.view).offset(20);
-    }];
-    
-    UITextField *ipTextField = [UITextField new];
-    NSString *serverIp = [self deviceIPAdress];
-    ipTextField.backgroundColor = [CommonsFunc colorOfSystemBackground];
-    [ipTextField setEnabled:NO];
-    ipTextField.text = serverIp;
-    [self.view addSubview:ipTextField];
-    [ipTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ipLabel.mas_right).offset(20);
-        make.centerY.equalTo(ipLabel);
-    }];
-
-    UILabel *portLabel = [UILabel new];
-    portLabel.text = @"端口";
-    [self.view addSubview:portLabel];
-    [portLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(ipLabel);
-        make.top.equalTo(ipLabel.mas_bottom).offset(15);
-    }];
-    
-    UITextField *portTextField = [UITextField new];
-    NSInteger portNum = LISTEN_PORT;
-    portTextField.enabled = NO;
-    portTextField.text = [NSString stringWithFormat:@"%ld", (long)portNum];//@"1234";
-    portTextField.backgroundColor = [CommonsFunc colorOfSystemBackground];
-    [self.view addSubview:portTextField];
-    [portTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ipTextField);
-        make.centerY.equalTo(portLabel);
-    }];
-    
-    UIButton *startBtn = [UIButton new];
-    [self.view addSubview:startBtn];
-    [startBtn setTitle:@"开始服务" forState:UIControlStateNormal];
-    startBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [startBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(ipLabel);
-        make.left.equalTo(ipTextField.mas_right).offset(20);
-    }];
-    [startBtn addTarget:self action:@selector(playBtnTaped:) forControlEvents:UIControlEventTouchUpInside];
-    [startBtn setBackgroundImage:[UIImage imageNamed:@"button.png"] forState:UIControlStateNormal];
-    
+    /*
     UIButton *settingBtn = [UIButton new];
     [settingBtn setTitle:@"设置" forState:UIControlStateNormal];
     [settingBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -170,8 +92,158 @@
     }];
     [settingBtn addTarget:self action:@selector(setting:) forControlEvents:UIControlEventTouchUpInside];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout:) name:NOTICE_LOGOUTSUCCESS object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout:) name:NOTICE_LOGOUTSUCCESS object:nil];
+    */
+}
+
+//input realPotision
+//output mapPositiion
+- (CGPoint) changeCood: (CGPoint )inputPoint
+{
+    int realX = mapContainer.bounds.size.width;
+    int realY = mapContainer.bounds.size.height;
+    
+    float scalX = MAPWIDTH / realX;
+    float scalY = MAPHEIGHT / realY;
+    int x = inputPoint.x / scalX;
+    int y = inputPoint.y / scalY;
+    CGPoint newPoit = CGPointMake(x, y);
+    
+    return newPoit;
+}
+
+#pragma mark - addSubViews
+- (void)addContainerView
+{
+    mapContainer = [UIView new];
+    [self.view addSubview:mapContainer];
+    mapContainer.backgroundColor = [UIColor darkGrayColor];
+    [mapContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(LEFTPADING);
+        make.top.equalTo(self.view).offset(TOPPADING);
+        make.size.mas_equalTo(CGSizeMake(MAPWIDTH, MAPHEIGHT));
+    }];
+    
+    [self mapContainerAddSubviews];
+    
+    
+    stationContainer = [UIView new];
+    stationContainer.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:stationContainer];
+    [stationContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mapContainer);
+        make.left.equalTo(mapContainer.mas_right).offset(LEFTPADING);
+        make.right.equalTo(self.view).offset(-RIGHTPADING);
+        make.bottom.equalTo(self.view).offset(-(TAPHEIGHT+BOTTOMPADING));
+    }];
+    
+    [self stationContainerAddSubviews];
+    
+    
+    detailContainer = [UIView new];
+    [self.view addSubview:detailContainer];
+    [detailContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(mapContainer);
+        make.bottom.equalTo(stationContainer);
+        make.top.equalTo(mapContainer.mas_bottom).offset(15);
+        make.right.equalTo(mapContainer);
+    }];
+    
+    [self detailContainerAddSubviews];
+    
+}
+
+- (void) mapContainerAddSubviews
+{
+    //add map
+    MapView *map = [[MapView alloc] initWithFrame:mapContainer.bounds];
+    [mapContainer addSubview:map];
+    
+}
+
+- (void) stationContainerAddSubviews
+{
+    //add tabelview
+    UITableView *tableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 100, 100) style:UITableViewStylePlain];
+    [stationContainer addSubview:tableView];
+    tableView.backgroundColor = [UIColor whiteColor];
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(stationContainer).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+    }];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    
+}
+
+- (void) detailContainerAddSubviews
+{
+    //add tstableview
+    NSArray *columns = @[
+                         @{ @"title" : @"agv 编号"},
+                         @{ @"title" : @"1 号车"},
+                         @{ @"title" : @"2 号车"},
+                         @{ @"title" : @"3 号车", @"titleColor" : @"FF00CF00"}
+                         ];
+    
+    NSArray *rows = @[
+                      @{ @"cells" : @[
+                                 @{ @"value" : @"当前站点"},
+                                 @{ @"value" : @1},
+                                 @{ @"value" : @2},
+                                 @{ @"value" : @3}
+                                 ]
+                         },
+                      @{ @"cells" : @[
+                                 @{ @"value" : @"目标站点"},
+                                 @{ @"value" : @2},
+                                 @{ @"value" : @3},
+                                 @{ @"value" : @4}
+                                 ]
+                         },
+                      @{ @"cells" : @[
+                                 @{ @"value" : @"运行状态"},
+                                 @{ @"value" : @"获取失败"},
+                                 @{ @"value" : @"获取失败"},
+                                 @{ @"value" : @"获取失败"}
+                                 ]
+                         }
+                      ];
+    
+    TSTableView *tableView = [[TSTableView alloc] initWithFrame: detailContainer.bounds];
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    //tableView.delegate = self;
+    [self.view addSubview:tableView];
+    
+    TSTableViewModel  *dataModel = [[TSTableViewModel alloc] initWithTableView:tableView andStyle:kTSTableViewStyleDark];
+    [dataModel setColumns:columns andRows:rows];
+    
+}
+
+
+#pragma mark - tableviewDele
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CMainCell = @"CMainCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CMainCell];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier: CMainCell];
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"工位：%ld", indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:@"button"];
+    
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 8;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 45;
 }
 
 #pragma mark - noti
@@ -179,7 +251,8 @@
  *  返回该程序后的重新监听
  *  @param
  */
-- (void)backToForground :(NSNotification *)noti {
+- (void)backToForground :(NSNotification *)noti
+{
     NSLog(@"backToForground noti");
     if ([ServerSocket sharedSocket].isRunning) {
         [control startListen];

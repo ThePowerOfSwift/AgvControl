@@ -3,4 +3,5 @@ target 'AgvControl' do
   pod 'Masonry'
   pod 'IQKeyboardManager'
   pod 'Toast'
+  pod 'TSUIKit'
 end

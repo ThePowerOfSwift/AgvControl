@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TSUIKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Toast.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,7 +32,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>30763B42017897752367423BE998CCB3</key>
+		<key>0FFDA111395D353D7A0E9E2E93944070</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -37,7 +42,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AD814A6DE5A9483C2E44C24ED0F3F14F</key>
+		<key>92350F50622D758B52F7FC698CD39470</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9FF0A7280419C841E081425037CA05D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

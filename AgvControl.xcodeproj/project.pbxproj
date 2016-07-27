@@ -102,6 +102,7 @@
 		422F83CF1D2B5B3700F4E31E /* SPGripViewBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 422F83CC1D2B5B3700F4E31E /* SPGripViewBorderView.m */; };
 		422F83D01D2B5B3700F4E31E /* ZDStickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 422F83CD1D2B5B3700F4E31E /* ZDStickerView.bundle */; };
 		422F83D31D2B810700F4E31E /* UdpServerSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 422F83D21D2B810700F4E31E /* UdpServerSocket.m */; };
+		4298A2131D3E067E000E696C /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4298A2121D3E067E000E696C /* MapView.m */; };
 		91157FEDB35298AFED25AC27 /* libPods-AgvControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2101ED3E53ACA2C4E3FBE148 /* libPods-AgvControl.a */; };
 /* End PBXBuildFile section */
 
@@ -274,6 +275,8 @@
 		422F83CD1D2B5B3700F4E31E /* ZDStickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZDStickerView.bundle; sourceTree = "<group>"; };
 		422F83D11D2B810700F4E31E /* UdpServerSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpServerSocket.h; sourceTree = "<group>"; };
 		422F83D21D2B810700F4E31E /* UdpServerSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UdpServerSocket.m; sourceTree = "<group>"; };
+		4298A2111D3E067E000E696C /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
+		4298A2121D3E067E000E696C /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapView.m; sourceTree = "<group>"; };
 		D59015F624E97D695E6A075B /* Pods-AgvControl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AgvControl.release.xcconfig"; path = "Pods/Target Support Files/Pods-AgvControl/Pods-AgvControl.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -333,6 +336,8 @@
 				422F82E81D2B415900F4E31E /* ConnectStatesCell.m */,
 				422F82E91D2B415900F4E31E /* FirstViewController.h */,
 				422F82EA1D2B415900F4E31E /* FirstViewController.m */,
+				4298A2111D3E067E000E696C /* MapView.h */,
+				4298A2121D3E067E000E696C /* MapView.m */,
 				422F82BF1D2B406500F4E31E /* ViewController.h */,
 				422F82C01D2B406500F4E31E /* ViewController.m */,
 				422F82EF1D2B416400F4E31E /* SecondViewController.h */,
@@ -801,6 +806,7 @@
 				422F835F1D2B46DC00F4E31E /* UIColor+Hex.m in Sources */,
 				422F82EE1D2B415900F4E31E /* FirstViewController.m in Sources */,
 				422F83AD1D2B5B1500F4E31E /* StarGazerViewController2.m in Sources */,
+				4298A2131D3E067E000E696C /* MapView.m in Sources */,
 				422F82EC1D2B415900F4E31E /* GLViewProcessingTest.m in Sources */,
 				422F837B1D2B46FC00F4E31E /* LewPopupViewAnimationDrop.m in Sources */,
 				422F83441D2B46AB00F4E31E /* HitControlHex.m in Sources */,

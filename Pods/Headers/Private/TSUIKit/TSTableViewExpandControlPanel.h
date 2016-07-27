@@ -1,0 +1,1 @@
+../../../TSUIKit/Classes/TSUIKit/TSTableView/Private/TSTableViewExpandControlPanel.h

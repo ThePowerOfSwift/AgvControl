@@ -1,0 +1,1 @@
+../../../TSUIKit/Classes/TSUIKit/TSNavigationStripView/TSNavigationStripDataSource.h
