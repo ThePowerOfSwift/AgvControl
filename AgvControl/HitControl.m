@@ -11,7 +11,7 @@
 @implementation HitControl
 @synthesize server;
 
-static HitControl* _instance = nil;
+static HitControl * _instance = nil;
 
 + (instancetype) sharedControl
 {

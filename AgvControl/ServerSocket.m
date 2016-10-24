@@ -334,7 +334,7 @@ static ServerSocket* _instance = nil;
     }
 }
 
-- (void)compareMessage :(NSTimer  *) timer{
+- (void)compareMessage :(NSTimer  *) timer {
     static int times = 0;
     AsyncSocket *S = (AsyncSocket *)[[timer userInfo] objectForKey:@"sock"];
     if (!receiveMessage) {//为空，没有读取到

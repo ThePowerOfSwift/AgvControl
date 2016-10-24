@@ -341,7 +341,8 @@
 }
 
 - (void)stopBtnTaped :(UIButton *)btn {
-    NSLog(@"stopTaped");
+    NSLog(@"隐藏按钮");
+    /*
     NSLog(@"selected count :%lu",(unsigned long)m_modelsArray.count);
     int i;
     for ( i = 0 ; i<[m_modelsArray count]; i++) {
@@ -350,6 +351,24 @@
             [model.socket disconnect];
         }
     }
+    */
+    if([btn.titleLabel.text isEqualToString:@"隐藏"]){
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            rightsideContainer.alpha = 0;
+            self.p_debugLabel.alpha = 0;
+            [btn setTitle:@"显示" forState:UIControlStateNormal];
+        }];
+
+    }else{
+    
+        [UIView animateWithDuration:1.0 animations:^{
+            rightsideContainer.alpha = 1;
+            self.p_debugLabel.alpha = 1;
+            [btn setTitle:@"隐藏" forState:UIControlStateNormal];
+        }];
+    }
+    
 }
 
 - (void)compareMessage :(NSTimer  *) timer{
@@ -437,7 +456,9 @@
     }];
     
     stopBtn = [UIButton new];
-    [rightsideContainer addSubview:stopBtn];
+//    [rightsideContainer addSubview:stopBtn];
+    [self.view addSubview:stopBtn];
+    
     [stopBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(rightsideContainer);
         make.centerX.equalTo(rightsideContainer);
@@ -449,7 +470,7 @@
     stopBtn.layer.masksToBounds = YES;
     stopBtn.layer.cornerRadius = 5.0;
     [self setStopBtnGray];
-    [stopBtn setTitle:@"断开连接" forState:UIControlStateNormal];
+    [stopBtn setTitle:@"隐藏" forState:UIControlStateNormal];
     stopBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [stopBtn addTarget:self action:@selector(stopBtnTaped:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -458,7 +479,7 @@
     UIView *headerview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 30)];
     headerview.backgroundColor = [UIColor orangeColor];
     UILabel *iplabel = [UILabel new];
-    iplabel.text = @"机器人ip";
+    iplabel.text = @"Agv编号";
     [headerview addSubview:iplabel];
     [iplabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(headerview);
@@ -466,7 +487,7 @@
     }];
     
     UILabel *portLable = [UILabel new];
-    [portLable setText:@"端口"];
+    [portLable setText:@"目标工位"];
     [headerview addSubview:portLable];
     [portLable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(headerview);

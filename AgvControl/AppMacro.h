@@ -11,7 +11,8 @@
 
 //监听端口
 #define LISTEN_PORT 1234;
-#define UDPBIND_PORT 10001;
+#define UDPBIND_PORT 8080;
+#define UDPSTA_PORT 8081;
 
 //robotName
 //小红

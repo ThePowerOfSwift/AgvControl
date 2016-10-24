@@ -1,21 +1,26 @@
 PODS:
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
   - IQKeyboardManager (4.0.3)
   - Masonry (1.0.1)
   - Toast (3.0)
   - TSUIKit (0.1)
 
 DEPENDENCIES:
+  - FMDB
   - IQKeyboardManager
   - Masonry
   - Toast
   - TSUIKit
 
 SPEC CHECKSUMS:
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManager: be9695ffc5a52077deb4847608f338771022d6d1
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   Toast: 32c59229abfcf41850162b83bb9259dc84372473
   TSUIKit: 8b4ad3cf1f0ddad89db5411ed54458ffbb1a23d6
 
-PODFILE CHECKSUM: 454fa7ed35390c0e0887b352dbf9abe761e4ea1d
+PODFILE CHECKSUM: 9fb517d1050a4eb232fb6d142cf2dd850cf5015b
 
 COCOAPODS: 1.0.1

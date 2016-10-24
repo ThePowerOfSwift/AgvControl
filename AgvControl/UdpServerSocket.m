@@ -82,7 +82,6 @@ static UdpServerSocket *instance;
 
 - (void)sendMessage:(NSString *)string debugstring:(NSString *)debugs{
     NSLog(@"send message:%@, debus:%@", string, debugs);
-    
 }
 
 #pragma mark - delegate

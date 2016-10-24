@@ -7,6 +7,7 @@
 //
 
 #import "MapView.h"
+#import <FMDB.h>
 #define IMAGEWIDTH 30
 #define IMAGEHEIGHT 30
 
@@ -31,11 +32,84 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        imageView = [[UIImageView alloc] initWithFrame:frame];
-        imageView.image = [UIImage imageNamed:@"dPad-Left"];
+        imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        imageView.image = [UIImage imageNamed:@"map.png"];
         [self addSubview:imageView];
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
+        }];
+        
+        [self initStaionPos];
+        
     }
     return self;
+}
+
+- (void) initStaionPos
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"agv.db" ofType:nil];
+    //    NSString *path = [[NSBundle mainBundle] pathForResource:@"agv.db" ofType:@"sqlite"];//cannot get the db
+    
+    
+    FMDatabase *database = [FMDatabase databaseWithPath:path];
+    if (![database open]){
+        NSLog(@"database open failed");
+        return;
+    }
+    
+    FMResultSet *s = [database executeQuery:@"SELECT * FROM mapPoint"];
+    NSLog(@"set num: %d", s.columnCount);
+    while ([s next]) {
+        //retrieve values for each record
+        //NSString *totalCount = [s stringForColumn:@"cargoname"];
+        
+        NSInteger staNum = [s intForColumn:@"cardPoint"];
+        if (staNum <= 50) {
+            NSInteger x = [s intForColumn:@"x"];
+            NSInteger y = [s intForColumn:@"y"];
+            CGPoint staPt = CGPointMake(x, y);
+            CGPoint newPt = [self changeCoordToIos:staPt];
+            
+            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+            btn.tag = staNum;
+            [btn setTitle:[NSString stringWithFormat:@"%ld", staNum] forState:UIControlStateNormal];
+            btn.backgroundColor = [UIColor blueColor];
+            [self addSubview:btn];
+            [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self).offset(newPt.x );
+                make.top.equalTo(self.mas_top).offset(newPt.y );
+                make.size.mas_equalTo(CGSizeMake(24, 24));
+            }];
+            
+        }
+    }
+}
+
+- (void)stationCall :(NSInteger )stationNum {
+    UIButton *bt = (UIButton *)[self viewWithTag:stationNum];
+    bt.backgroundColor = [UIColor redColor];
+    
+    NSTimer *time = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(blink:) userInfo:@{@"sta":[NSNumber numberWithInteger:stationNum]} repeats:NO];
+    [time fire];
+}
+
+-(void)blink:(NSTimer *)timer {
+    
+    NSDictionary *usr = [timer userInfo];
+    NSNumber *staNum = [usr objectForKey:@"sta"];
+    NSLog(@"time blink of staNum : %ld",staNum.integerValue);
+    
+}
+
+
+- (CGPoint) changeCoordToIos:(CGPoint) inPoint {//to 689, 391
+    NSInteger oriWid = 894;
+    NSInteger oriHei = 511;
+    NSInteger mapWidth = self.bounds.size.width;
+    NSInteger mapHeight = self.bounds.size.height;
+    
+    CGPoint newCg = CGPointMake(inPoint.x * mapWidth / oriWid, inPoint.y * mapHeight / oriHei);
+    return newCg;
 }
 
 

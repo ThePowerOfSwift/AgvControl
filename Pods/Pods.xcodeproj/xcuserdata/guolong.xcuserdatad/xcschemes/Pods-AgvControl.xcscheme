@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '0FFDA111395D353D7A0E9E2E93944070'
+               BlueprintIdentifier = 'BD26C0318FF8B1985F8A9BA7490574A8'
                BlueprintName = 'Pods-AgvControl'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-AgvControl.a'>

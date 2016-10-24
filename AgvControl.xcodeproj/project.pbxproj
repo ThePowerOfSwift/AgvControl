@@ -103,6 +103,9 @@
 		422F83D01D2B5B3700F4E31E /* ZDStickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 422F83CD1D2B5B3700F4E31E /* ZDStickerView.bundle */; };
 		422F83D31D2B810700F4E31E /* UdpServerSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 422F83D21D2B810700F4E31E /* UdpServerSocket.m */; };
 		4298A2131D3E067E000E696C /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4298A2121D3E067E000E696C /* MapView.m */; };
+		42F6ADBE1D96263A0046443E /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 42F6ADBD1D96263A0046443E /* map.png */; };
+		42F6ADC01D96520A0046443E /* agv.db in Resources */ = {isa = PBXBuildFile; fileRef = 42F6ADBF1D96520A0046443E /* agv.db */; };
+		42F6ADC31D9908E10046443E /* AgvControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F6ADC21D9908E10046443E /* AgvControl.m */; };
 		91157FEDB35298AFED25AC27 /* libPods-AgvControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2101ED3E53ACA2C4E3FBE148 /* libPods-AgvControl.a */; };
 /* End PBXBuildFile section */
 
@@ -277,6 +280,10 @@
 		422F83D21D2B810700F4E31E /* UdpServerSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UdpServerSocket.m; sourceTree = "<group>"; };
 		4298A2111D3E067E000E696C /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
 		4298A2121D3E067E000E696C /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapView.m; sourceTree = "<group>"; };
+		42F6ADBD1D96263A0046443E /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
+		42F6ADBF1D96520A0046443E /* agv.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = agv.db; sourceTree = "<group>"; };
+		42F6ADC11D9908E10046443E /* AgvControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgvControl.h; sourceTree = "<group>"; };
+		42F6ADC21D9908E10046443E /* AgvControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgvControl.m; sourceTree = "<group>"; };
 		D59015F624E97D695E6A075B /* Pods-AgvControl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AgvControl.release.xcconfig"; path = "Pods/Target Support Files/Pods-AgvControl/Pods-AgvControl.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -353,6 +360,8 @@
 				422F82FD1D2B417D00F4E31E /* Login */,
 				422F82FB1D2B416D00F4E31E /* Images.xcassets */,
 				422F82C51D2B406500F4E31E /* Assets.xcassets */,
+				42F6ADBD1D96263A0046443E /* map.png */,
+				42F6ADBF1D96520A0046443E /* agv.db */,
 				422F82C71D2B406500F4E31E /* LaunchScreen.storyboard */,
 				422F82B91D2B406500F4E31E /* Supporting Files */,
 			);
@@ -436,6 +445,8 @@
 				422F83311D2B46AB00F4E31E /* ServerSocket.m */,
 				422F83321D2B46AB00F4E31E /* SocketMessageModel.h */,
 				422F83331D2B46AB00F4E31E /* SocketMessageModel.m */,
+				42F6ADC11D9908E10046443E /* AgvControl.h */,
+				42F6ADC21D9908E10046443E /* AgvControl.m */,
 				422F83341D2B46AB00F4E31E /* HitControl.h */,
 				422F83351D2B46AB00F4E31E /* HitControl.m */,
 				422F83361D2B46AB00F4E31E /* HitNewControl.h */,
@@ -691,9 +702,11 @@
 				422F83A21D2B4B3500F4E31E /* dPad-UpLeft@2x.png in Resources */,
 				422F83951D2B4B3500F4E31E /* dPad-DownLeft.png in Resources */,
 				422F83201D2B460A00F4E31E /* login_avatar@2x.png in Resources */,
+				42F6ADC01D96520A0046443E /* agv.db in Resources */,
 				422F83971D2B4B3500F4E31E /* dPad-DownRight.png in Resources */,
 				422F83991D2B4B3500F4E31E /* dPad-Left.png in Resources */,
 				422F83471D2B46AB00F4E31E /* SocketClientViewController_iPad.xib in Resources */,
+				42F6ADBE1D96263A0046443E /* map.png in Resources */,
 				422F83961D2B4B3500F4E31E /* dPad-DownLeft@2x.png in Resources */,
 				422F839C1D2B4B3500F4E31E /* dPad-None@2x.png in Resources */,
 				422F83191D2B460A00F4E31E /* login_btn_blue_press.png in Resources */,
@@ -788,6 +801,7 @@
 				422F837D1D2B46FC00F4E31E /* LewPopupViewAnimationSlide.m in Sources */,
 				422F83C41D2B5B2400F4E31E /* RouteView.m in Sources */,
 				422F83C71D2B5B2400F4E31E /* MapInfoViewController.m in Sources */,
+				42F6ADC31D9908E10046443E /* AgvControl.m in Sources */,
 				422F837F1D2B46FC00F4E31E /* UIViewController+LewPopupViewController.m in Sources */,
 				422F835E1D2B46DC00F4E31E /* DeskView.m in Sources */,
 				422F83CE1D2B5B3700F4E31E /* ZDStickerView.m in Sources */,

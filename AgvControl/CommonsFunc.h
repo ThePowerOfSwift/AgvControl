@@ -13,7 +13,7 @@
 
 + (UIImage *)imagePinch:(UIImage *)img width:(int)width height:(int)height ;
 
-//十六进制转nsstring
+//十六进制string转nsstring
 +(NSString *)stringFromHexString:(NSString *)hexString;
 +(NSString *)stringToHexString:(int)number ;
 
@@ -29,7 +29,7 @@
 +(UIColor *)colorOfLight;
 +(UIColor *)colorOfMiddle;
 +(UIColor *)colorOfDark;
-+(NSString*)getIPAddressByHostName:(NSString*)strHostName;
++(NSString*)getIPAddressByHostName:(NSString*)strHostName;//域名解析用的
 
 //+(void)GetJsonWithUrl:(NSString *)url parameters:(id)parameter success:(void(^)(id responseObjec))succes faild:(void (^)(AFHTTPRequestOperation *operation))faildd;
 ////post 也是带token的

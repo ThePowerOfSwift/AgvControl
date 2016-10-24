@@ -15,6 +15,7 @@
 #import <TSTableView.h>
 #import <TSTableViewModel.h>
 #import "MapView.h"
+#import <FMDB.h>
 
 //#import "ServerSocket.h"
 //#import "UdpServerSocket.h"
@@ -22,7 +23,7 @@
 #define LEFTPADING   15
 #define TOPPADING    45
 #define RIGHTPADING  15
-#define BOTTOMPADING 25
+#define BOTTOMPADING (25+60)
 #define MAPWIDTH     1600
 #define MAPHEIGHT    900
 #define TAPHEIGHT    49
@@ -30,8 +31,9 @@
 @interface FirstViewController ()  <UITableViewDelegate, UITableViewDataSource>
 {
     NSInteger screenWidth;
+    NSInteger screenHeight;
     UIView *mapContainer;
-    UIView *stationContainer;
+    //UIView *stationContainer;
     UIView *detailContainer;
     
 }
@@ -68,12 +70,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"what the fuck");
+    
     self.view.backgroundColor = [UIColor whiteColor];//[CommonsFunc colorOfSystemBackground];
     isStart = NO;
     screenWidth = [UIScreen mainScreen].bounds.size.width;
+    screenHeight = [UIScreen mainScreen].bounds.size.height;
+    
+    /*
+    NSString *DBNAME = @"agv.db";
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [paths objectAtIndex:0];
+    NSString *file = [filePath stringByAppendingPathComponent:DBNAME];
+    NSLog(@"%@",file);
+    NSFileManager *fm = [NSFileManager defaultManager];
+    BOOL isExist = [fm fileExistsAtPath:DBNAME];
+    if (!isExist) {
+        NSString *backupDbPath = [[NSBundle mainBundle] pathForResource:DBNAME ofType:nil];
+        NSLog(@"xxoo。。。%@",backupDbPath);
+        [fm copyItemAtPath:backupDbPath toPath:file error:nil];
+    }else{
+        NSLog(@"文件存在");
+    }
+    
+    */
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"agv.db" ofType:nil];
+    //    NSString *path = [[NSBundle mainBundle] pathForResource:@"agv.db" ofType:@"sqlite"];//cannot get the db
+    
+    FMDatabase *database = [FMDatabase databaseWithPath:path];
+    if (![database open]){
+        NSLog(@"database open failed");
+        return;
+    }
+    FMResultSet *s = [database executeQuery:@"SELECT * FROM CargoInfo"];
+    NSLog(@"set num: %d", s.columnCount);
+    while ([s next]) {
+        //retrieve values for each record
+        NSString *totalCount = [s stringForColumn:@"cargoname"];
+        NSLog(@"%@",totalCount);
+    }
+
     
     [self addContainerView];
-    
     
     /*
     UIButton *settingBtn = [UIButton new];
@@ -118,29 +158,39 @@
 {
     mapContainer = [UIView new];
     [self.view addSubview:mapContainer];
-    mapContainer.backgroundColor = [UIColor darkGrayColor];
+    mapContainer.backgroundColor = [UIColor lightGrayColor];
     [mapContainer mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(LEFTPADING);
-        make.top.equalTo(self.view).offset(TOPPADING);
-        make.size.mas_equalTo(CGSizeMake(MAPWIDTH, MAPHEIGHT));
+        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(TOPPADING, LEFTPADING, BOTTOMPADING, RIGHTPADING));
     }];
     
-    [self mapContainerAddSubviews];
+    //CGRect rect = mapContainer.frame;
+    
+    MapView *map = [[MapView alloc] initWithFrame:CGRectMake(LEFTPADING, TOPPADING, screenWidth-LEFTPADING-RIGHTPADING, screenHeight- TAPHEIGHT ) ];
+    [mapContainer addSubview:map];
+    [map mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(mapContainer);
+    }];
+    
+    map.backgroundColor = [UIColor orangeColor];
     
     
+    //改成易开模式
+    
+    /*
     stationContainer = [UIView new];
     stationContainer.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:stationContainer];
     [stationContainer mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mapContainer);
-        make.left.equalTo(mapContainer.mas_right).offset(LEFTPADING);
+        //make.left.equalTo(mapContainer.mas_right).offset(LEFTPADING);
         make.right.equalTo(self.view).offset(-RIGHTPADING);
         make.bottom.equalTo(self.view).offset(-(TAPHEIGHT+BOTTOMPADING));
+        make.width.mas_equalTo(@100);
     }];
     
     [self stationContainerAddSubviews];
     
-    
+     
     detailContainer = [UIView new];
     [self.view addSubview:detailContainer];
     [detailContainer mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -151,17 +201,13 @@
     }];
     
     [self detailContainerAddSubviews];
+     */
     
 }
 
-- (void) mapContainerAddSubviews
-{
-    //add map
-    MapView *map = [[MapView alloc] initWithFrame:mapContainer.bounds];
-    [mapContainer addSubview:map];
-    
-}
 
+
+/*
 - (void) stationContainerAddSubviews
 {
     //add tabelview
@@ -175,6 +221,7 @@
     tableView.dataSource = self;
     
 }
+*/
 
 - (void) detailContainerAddSubviews
 {
@@ -263,9 +310,11 @@
 - (void)logout:(id)sender {
     MainViewController *main =(MainViewController *) self.tabBarController;
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     // 在delegate中初始化新的controller
     // 修改rootViewController
     // [delegate.window addSubview:delegate.main.view];
+    
     [main.view removeFromSuperview];
     delegate.window.rootViewController = [LoginViewController new];
 }

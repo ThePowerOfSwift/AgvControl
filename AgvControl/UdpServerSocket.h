@@ -27,5 +27,5 @@
 
 - (void)stopListen ;
 
-- (void) sendMessage:(NSString *)string debugstring:(NSString *)debugs;
+- (void)sendMessage:(NSString *)string debugstring:(NSString *)debugs;
 @end
